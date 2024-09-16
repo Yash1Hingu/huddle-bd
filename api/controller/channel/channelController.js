@@ -30,10 +30,11 @@ exports.read_a_channels = async (req, res) => {
 
     // channels retrive.
     const channelsIds = req.user.channels;
+    const token = req.token;
     console.log(channelsIds);
     // response.
     const channels = await Channel.find({_id: {$in: channelsIds}});
     console.log(channels);
 
-    res.status(200).send({ channels });
+    res.status(200).send({ channels, token});
 }
