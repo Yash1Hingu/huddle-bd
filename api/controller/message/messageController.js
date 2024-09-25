@@ -23,15 +23,15 @@ exports.read_a_messages = async (req, res) => {
     try {
 
         const channelId = req.params.channelId;
-        const messages = await Message.find({ channelId }).sort({ createdAt: -1 }).populate({
+        const messages = await Message.find({ channelId }).sort({ createdAt: 1 }).populate({
             path: 'sender',
             select: 'username' // Specify the fields to return from the User model
         });
 
-        const usersChannel = req.user.channels;
+        const user = req.user;
 
-        res.status(200).send(messages);
+        res.status(200).send({ messages, 'username': user.username});
     } catch (error) {
-        res.status(500).send({error: error});
+        res.status(500).send({ error: error });
     }
 }

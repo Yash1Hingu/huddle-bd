@@ -1,15 +1,17 @@
+
 # 📬 Messaging API
 
-This is a backend messaging API created with Node.js, Express, and MongoDB. It allows users to register, log in, create channels, and send messages.
+This is a backend messaging API created with Node.js, Express, and MongoDB. It allows users to register, log in, create channels, send messages, and manage join requests.
 
 ## 📑 Table of Contents
-- [🚀 Getting Started](#-getting-started)
-- [📡 API Endpoints](#-api-endpoints)
-  - [👤 User Routes](#-user-routes)
-  - [📢 Channel Routes](#-channel-routes)
-  - [💬 Message Routes](#-message-routes)
-- [🔐 Middleware](#-middleware)
-- [⚠️ Error Handling](#️-error-handling)
+- [🚀 Getting Started](#getting-started)
+- [📡 API Endpoints](#api-endpoints)
+  - [👤 User Routes](#user-routes)
+  - [📢 Channel Routes](#channel-routes)
+  - [💬 Message Routes](#message-routes)
+  - [🔗 Join Request Routes](#-oin-request-routes)
+- [🔐 Middleware](#middleware)
+- [⚠️ Error Handling](#error-handling)
 - [📜 License](#license)
 
 ---
@@ -25,27 +27,27 @@ This is a backend messaging API created with Node.js, Express, and MongoDB. It a
 ### ⚙️ Setup
 
 1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/messaging-api.git
-cd messaging-api
-```
+   ```bash
+   git clone https://github.com/yourusername/messaging-api.git
+   cd messaging-api
+   ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
 3. Create a `.env` file:
-```env
-MONGOOSE_URL=mongodb://localhost:27017/yourDatabaseName
-JWT_TOKEN=your_jwt_secret_key
-PORT=3000
-```
+   ```env
+   MONGOOSE_URL=mongodb://localhost:27017/yourDatabaseName
+   JWT_TOKEN=your_jwt_secret_key
+   PORT=3000
+   ```
 
 4. Start the server:
-```bash
-npm start
-```
+   ```bash
+   npm start
+   ```
 
 The server will run on `http://localhost:3000` (or the port specified in the `.env` file).
 
@@ -193,6 +195,38 @@ The server will run on `http://localhost:3000` (or the port specified in the `.e
 
 ---
 
+### 🔗 Join Request Routes
+
+#### 1. **🔗 Send Join Request**
+- **POST** `/api/channels/:channelId/join`
+- **Description**: Sends a join request to a specific channel.
+- **Authorization**: Requires a valid JWT token in the `Authorization` header.
+- **Request Body**:
+  ```json
+  {
+    "recipientUserId": "recipientUserId"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "message": "Join request sent successfully"
+  }
+  ```
+
+#### 2. **✅ Accept Join Request**
+- **POST** `/api/channels/:channelId/join/accept`
+- **Description**: Accepts a pending join request for the authenticated user to join the channel.
+- **Authorization**: Requires a valid JWT token in the `Authorization` header.
+- **Response**:
+  ```json
+  {
+    "message": "Join request accepted and user added to the channel"
+  }
+  ```
+
+---
+
 ## 🔐 Middleware
 
 ### `auth.js`
@@ -209,3 +243,7 @@ All errors follow this structure:
   "error": "Error message"
 }
 ```
+
+---
+
+This version now includes the **Join Request** functionality under the `Join Request Routes` section, detailing both sending and accepting join requests.

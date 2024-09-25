@@ -10,8 +10,20 @@ const channelSchema = new mongoose.Schema({
         type: ObjectID,
         required: true,
         ref: 'user'
+    }],
+    joinRequests: [{
+        user: {
+            type: ObjectID,
+            ref: 'user',
+            required: true
+        },
+        status: {
+            type: String, // pending, accepted, rejected
+            default: 'pending',
+            required: true,
+        }
     }]
-},{timestamps: true});
+}, { timestamps: true });
 
 const Channel = mongoose.model('channels', channelSchema);
 module.exports = Channel;

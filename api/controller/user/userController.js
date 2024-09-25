@@ -23,3 +23,12 @@ exports.read_a_user = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 }
+
+exports.get_a_user = async (req, res) => {
+    try {
+        const username = req.user.username;
+        res.status(200).send({ username })
+    } catch(error) {
+        res.status(500).send({error: 'Server Error'});
+    }
+}
